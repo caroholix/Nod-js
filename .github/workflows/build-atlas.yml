@@ -5,9 +5,6 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,13 +18,17 @@ jobs:
         with:
           node-version: 18
 
+      - name: Enable ES Modules
+        run: |
+          echo '{ "type": "module" }' > package.json
+
       - name: Install dependencies
         run: npm install canvas
 
-      - name: Run build script (ES module)
+      - name: Run build script
         run: |
           mkdir -p atlas_output
-          node --input-type=module build_atlas.js
+          node build_atlas.js
 
       - name: Upload atlas output
         uses: actions/upload-artifact@v4
