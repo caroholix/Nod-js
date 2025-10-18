@@ -1,12 +1,37 @@
-name: Build Atlas
-on: [push]
+
+name: Build Emoji Atlas
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: npm install canvas
-      - run: node build_atlas.js
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install canvas
+
+      - name: Run build script
+        run: |
+          mkdir -p atlas_output
+          node build_atlas.js
+
+      - name: Upload atlas output
+        uses: actions/upload-artifact@v4
+        with:
+          name: emoji-atlas
+          path: atlas_output/
