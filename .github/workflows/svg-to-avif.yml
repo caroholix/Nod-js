@@ -1,4 +1,4 @@
-name: Convert SVGs to AVIF
+name: Convert SVGs to AVIFF
 
 on:  
   workflow_dispatch:
