@@ -1,6 +1,6 @@
 name: Convert SVGs to AVIF
 
-on:
+on:  
   workflow_dispatch:
   push:
     paths:
